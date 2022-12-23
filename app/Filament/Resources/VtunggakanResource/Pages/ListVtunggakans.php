@@ -29,4 +29,9 @@ class ListVtunggakans extends ListRecords
     {
         return 6;
     }
+
+    protected function shouldPersistTableFiltersInSession(): bool
+    {
+        return true;
+    }
 }

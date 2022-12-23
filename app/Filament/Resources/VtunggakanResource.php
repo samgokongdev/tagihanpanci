@@ -141,19 +141,24 @@ class VtunggakanResource extends Resource
                     ->date('d-m-Y'),
                 Tables\Columns\TextColumn::make('komitmens.max_sp2')
                     ->label('TARGET TERBIT SP2')
-                    ->date('d-m-Y'),
+                    ->date('d-m-Y')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('komitmens.max_permdok')
                     ->label('TARGET PERMINTAAN DOKUMEN')
-                    ->date('d-m-Y'),
+                    ->date('d-m-Y')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('komitmens.max_pengujian1')
                     ->label('TARGET PENGUJIAN TAHAP 1')
-                    ->date('d-m-Y'),
+                    ->date('d-m-Y')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('komitmens.max_pengujian2')
                     ->label('TARGET TERBIT SPHP')
-                    ->date('d-m-Y'),
+                    ->date('d-m-Y')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('komitmens.max_lhp')
                     ->label('TARGET TERBIT LHP')
-                    ->date('d-m-Y'),
+                    ->date('d-m-Y')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('manualfpps.spv')
                     ->label('SUPERVISOR'),
                 Tables\Columns\TextColumn::make('manualfpps.kt')
@@ -199,6 +204,26 @@ class VtunggakanResource extends Resource
                     ->trueLabel('Terbit SPHP')
                     ->falseLabel('Belum Terbit SPHP')
                     ->label('Cek SPHP'),
+                TernaryFilter::make('fg_sp2')
+                    ->placeholder('Semua')
+                    ->trueLabel('Ya')
+                    ->falseLabel('Tidak')
+                    ->label('Target SP2 < 7 Hari?'),
+                TernaryFilter::make('fg_sphp')
+                    ->placeholder('Semua')
+                    ->trueLabel('Ya')
+                    ->falseLabel('Tidak')
+                    ->label('Target SPHP < 7 Hari?'),
+                TernaryFilter::make('fg_lhp')
+                    ->placeholder('Semua')
+                    ->trueLabel('Ya')
+                    ->falseLabel('Tidak')
+                    ->label('Target LHP < 14 Hari?'),
+                SelectFilter::make('spv1')
+                    ->options(
+                        Vtunggakan::whereNotNull('spv1')->orderBy('spv1', 'asc')->pluck('spv1', 'spv1')
+                    )
+                    ->label('SUPERVISOR'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
