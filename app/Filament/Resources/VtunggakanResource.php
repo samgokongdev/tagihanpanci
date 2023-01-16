@@ -285,11 +285,11 @@ class VtunggakanResource extends Resource
                     ->trueLabel('Ya')
                     ->falseLabel('Tidak')
                     ->label('Target SPHP < 14 Hari?'),
-                // TernaryFilter::make('fg_lhp')
-                //     ->placeholder('Semua')
-                //     ->trueLabel('Ya')
-                //     ->falseLabel('Tidak')
-                //     ->label('Target LHP < 14 Hari?'),
+                TernaryFilter::make('belum_alokasi')
+                    ->placeholder('Semua')
+                    ->trueLabel('Belum')
+                    ->falseLabel('Ya')
+                    ->label('Sudah Alokasi?'),
                 TernaryFilter::make('is_alokasi_nosp2')
                     ->placeholder('Semua')
                     ->trueLabel('Ya')

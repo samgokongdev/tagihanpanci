@@ -13,7 +13,7 @@ class VtunggakanResource extends BaseWidget
     {
         if (Auth::user()->hasRole(['admin', 'kakap', 'kasip3', 'pelp3'])) {
             return [
-                Card::make('Total Tunggakan Pemeriksaan', Vtunggakan::count()),
+                Card::make('Total Tunggakan Pemeriksaan', Vtunggakan::whereNotNull('spv1')->count()),
                 Card::make('Tunggakan Sudah Alokasi Belum Terbit SP2', Vtunggakan::where('is_alokasi_nosp2', true)->count()),
                 Card::make('Tunggakan Sudah Isi Komitmen', Vtunggakan::where('fg_komitmen', true)->count()),
                 Card::make('Jumlah Tunggakan Pemeriksaan Target SPHP Melebihi Komitmen', Vtunggakan::where('is_sphp_lewat', true)->count()),
