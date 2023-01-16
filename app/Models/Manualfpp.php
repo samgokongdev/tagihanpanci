@@ -17,4 +17,9 @@ class Manualfpp extends Model
     {
         return $this->belongsTo(Vtunggakan::class, 'np2', 'np2');
     }
+
+    public function vlhps()
+    {
+        return $this->belongsTo(Vlhp::class, 'np2', 'np2');
+    }
 }

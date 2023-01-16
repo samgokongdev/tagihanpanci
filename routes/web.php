@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IdtpController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/admin');
+    return redirect('/admin/login');
 });
+
+Route::get('/idtp', [IdtpController::class, 'index']);

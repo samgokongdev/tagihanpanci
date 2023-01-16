@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\VtunggakanResource\Pages;
+namespace App\Filament\Resources\VlhpResource\Pages;
 
-use App\Filament\Resources\VtunggakanResource;
+use App\Filament\Resources\VlhpResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Filters\Layout;
 
-class ListVtunggakans extends ListRecords
+class ListVlhps extends ListRecords
 {
-    protected static string $resource = VtunggakanResource::class;
+    protected static string $resource = VlhpResource::class;
 
-    protected static ?string $title = 'Daftar Tunggakan';
+    protected static ?string $title = 'Laporan Hasil Pemeriksaan';
 
     protected function getActions(): array
     {

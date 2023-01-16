@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Vtunggakan extends Model
+class Vlhp extends Model
 {
     use HasFactory;
 
     protected $primaryKey = 'np2';
     public $incrementing = false;
     protected $keyType = 'string';
+
+    public function vskps()
+    {
+        return $this->hasMany(Vskp::class, 'np2', 'np2');
+    }
 
     public function komitmens()
     {
@@ -21,10 +26,5 @@ class Vtunggakan extends Model
     public function manualfpps()
     {
         return $this->hasOne(Manualfpp::class, 'np2', 'np2');
-    }
-
-    public function gelarperkaras()
-    {
-        return $this->belongsTo(Gelarperkara::class, 'np2', 'np2');
     }
 }

@@ -5,26 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Komitmen extends Model
+class Vskp extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'np2';
+    protected $primaryKey = 'nomor_ket';
     public $incrementing = false;
     protected $keyType = 'string';
-
-    public function tunggakans()
-    {
-        return $this->belongsTo(Vtunggakan::class, 'np2', 'np2');
-    }
 
     public function vlhps()
     {
         return $this->belongsTo(Vlhp::class, 'np2', 'np2');
-    }
-
-    public function tagihan()
-    {
-        return $this->belongsTo(Tagihanpanci::class, 'np2', 'np2');
     }
 }
