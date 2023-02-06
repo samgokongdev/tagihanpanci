@@ -265,11 +265,11 @@ class VtunggakanResource extends Resource
                     ->trueLabel('Belum Input SPPL')
                     ->falseLabel('Sudah Input SPPL')
                     ->label('Cek Penyampaian SP2 (SPPL)'),
-                // TernaryFilter::make('is_sp2')
-                //     ->placeholder('Semua')
-                //     ->trueLabel('Terbit SP2')
-                //     ->falseLabel('Belum Terbit SP2')
-                //     ->label('Cek SP2'),
+                TernaryFilter::make('is_sp2')
+                    ->placeholder('Semua')
+                    ->trueLabel('Terbit SP2')
+                    ->falseLabel('Belum Terbit SP2')
+                    ->label('Cek SP2'),
                 TernaryFilter::make('is_sphp')
                     ->placeholder('Semua')
                     ->trueLabel('Terbit SPHP')

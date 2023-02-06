@@ -125,6 +125,11 @@ class VlhpResource extends Resource
                         Vlhp::orderBy('tahun_lhp', 'desc')->pluck('tahun_lhp', 'tahun_lhp')
                     )
                     ->label('TAHUN LHP'),
+                SelectFilter::make('kode_rik')
+                    ->label('Kode Pemeriksaan')
+                    ->options(
+                        Vlhp::orderBy('kode_rik', 'asc')->pluck('kode_rik', 'kode_rik')
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->hidden(),
