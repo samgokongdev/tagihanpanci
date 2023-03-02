@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Webbingbrasil\FilamentCopyActions\Tables\Actions\CopyAction;
 
 class VlhpResource extends Resource
 {
@@ -72,6 +73,9 @@ class VlhpResource extends Resource
                 Tables\Columns\TextColumn::make('np2')
                     ->label('NP2')
                     ->searchable()
+                    ->copyable()
+                    ->copyMessage('NP2 Dicopy')
+                    ->copyMessageDuration(1500)
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('npwp')
                     ->label('NPWP')
@@ -132,7 +136,7 @@ class VlhpResource extends Resource
                     ),
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->hidden(),
+                Tables\Actions\EditAction::make()->hidden()
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make()->hidden(),

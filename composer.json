@@ -16,6 +16,7 @@
         "livewire/livewire": "^2.10",
         "spatie/laravel-permission": "^5.7",
         "webbingbrasil/filament-advancedfilter": "^1.1",
+        "webbingbrasil/filament-copyactions": "^1.0",
         "webbingbrasil/filament-datefilter": "^1.1"
     },
     "require-dev": {

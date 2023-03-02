@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\Vtunggakan;
+use App\Models\Vspt;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class VtunggakanPolicy
+class VsptPolicy
 {
     use HandlesAuthorization;
 
@@ -18,19 +18,19 @@ class VtunggakanPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3', 'spv', 'fpp']);
+        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3', 'pelayanan']);
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vtunggakan  $vtunggakan
+     * @param  \App\Models\Vspt  $vspt
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Vtunggakan $vtunggakan)
+    public function view(User $user, Vspt $vspt)
     {
-        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3', 'spv', 'fpp']);
+        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3', 'pelayanan']);
     }
 
     /**
@@ -41,29 +41,29 @@ class VtunggakanPolicy
      */
     public function create(User $user)
     {
-        // return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vtunggakan  $vtunggakan
+     * @param  \App\Models\Vspt  $vspt
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Vtunggakan $vtunggakan)
+    public function update(User $user, Vspt $vspt)
     {
-        // return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
+        return $user->hasRole(['admin', 'pelp3']);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vtunggakan  $vtunggakan
+     * @param  \App\Models\Vspt  $vspt
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Vtunggakan $vtunggakan)
+    public function delete(User $user, Vspt $vspt)
     {
         //
     }
@@ -72,10 +72,10 @@ class VtunggakanPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vtunggakan  $vtunggakan
+     * @param  \App\Models\Vspt  $vspt
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Vtunggakan $vtunggakan)
+    public function restore(User $user, Vspt $vspt)
     {
         //
     }
@@ -84,10 +84,10 @@ class VtunggakanPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Vtunggakan  $vtunggakan
+     * @param  \App\Models\Vspt  $vspt
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Vtunggakan $vtunggakan)
+    public function forceDelete(User $user, Vspt $vspt)
     {
         //
     }

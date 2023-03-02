@@ -26,7 +26,7 @@ class VtunggakanResource extends Resource
 
     protected static ?string $navigationLabel = 'Tunggakan Pemeriksaan';
 
-    protected static ?string $navigationGroup = 'Pengawasan Pemeriksaan';
+    protected static ?string $navigationGroup = 'Pengawasan Tunggakan';
 
 
 
@@ -99,15 +99,7 @@ class VtunggakanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('spv1')
-                    ->label('SUPERVISOR')
-                    ->sortable()
-                    ->toggleable()
-                    ->size('sm'),
-                Tables\Columns\TextColumn::make('pic1')
-                    ->label('FPP PIC')
-                    ->toggleable()
-                    ->size('sm'),
+
                 // Tables\Columns\TextColumn::make('tgl_np2')
                 //     ->label('TANGGAL NP2')
                 //     ->date('d-m-Y')
@@ -123,6 +115,12 @@ class VtunggakanResource extends Resource
                     // ->sortable()
                     ->searchable()
                     ->toggleable()
+                    ->size('sm'),
+                Tables\Columns\TextColumn::make('np2')
+                    ->label('NP2')
+                    ->searchable()
+                    ->copyable()
+                    ->toggleable(isToggledHiddenByDefault: false)
                     ->size('sm'),
                 // Tables\Columns\TextColumn::make('nama_wp2')
                 //     ->label('NAMA WP (KECIL)')
@@ -199,7 +197,13 @@ class VtunggakanResource extends Resource
                 //     ->toggleable()
                 //     ->size('sm'),
                 Tables\Columns\TextColumn::make('komitmens.max_pengujian2')
-                    ->label('TARGET TERBIT SPHP')
+                    ->label('KOMITMEN SPHP')
+                    ->date('d-m-Y')
+                    ->sortable()
+                    ->toggleable()
+                    ->size('sm'),
+                Tables\Columns\TextColumn::make('komitmens.max_pengujian1')
+                    ->label('REKOMITMEN SPHP')
                     ->date('d-m-Y')
                     ->sortable()
                     ->toggleable()
@@ -223,11 +227,16 @@ class VtunggakanResource extends Resource
                 //     ->label('KETUA TIM')
                 //     ->toggleable()
                 //     ->size('sm'),
-                Tables\Columns\TextColumn::make('np2')
-                    ->label('NP2')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: false)
+                Tables\Columns\TextColumn::make('spv1')
+                    ->label('SUPERVISOR')
+                    ->sortable()
+                    ->toggleable()
                     ->size('sm'),
+                Tables\Columns\TextColumn::make('pic1')
+                    ->label('FPP PIC')
+                    ->toggleable()
+                    ->size('sm'),
+
             ])
             ->filters([
                 // SelectFilter::make('nama_wp')

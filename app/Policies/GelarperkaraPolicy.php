@@ -18,7 +18,7 @@ class GelarperkaraPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
+        // return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
     }
 
     /**
@@ -30,7 +30,7 @@ class GelarperkaraPolicy
      */
     public function view(User $user, Gelarperkara $gelarperkara)
     {
-        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
+        // return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
     }
 
     /**

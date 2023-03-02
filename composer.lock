@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da75f2f1e73fdb00a7d5bf25fb756d54",
+    "content-hash": "8f16e49bbf931a148425520c83d022e8",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -7287,6 +7287,60 @@
                 "source": "https://github.com/webbingbrasil/filament-advancedfilter/tree/v1.1.2"
             },
             "time": "2022-11-01T13:37:21+00:00"
+        },
+        {
+            "name": "webbingbrasil/filament-copyactions",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webbingbrasil/filament-copyactions.git",
+                "reference": "31e2dd3d194c34d766c30950a7ed4fd4ec941072"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webbingbrasil/filament-copyactions/zipball/31e2dd3d194c34d766c30950a7ed4fd4ec941072",
+                "reference": "31e2dd3d194c34d766c30950a7ed4fd4ec941072",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.16",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Webbingbrasil\\FilamentCopyActions\\FilamentCopyActionsProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webbingbrasil\\FilamentCopyActions\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danilo Andrade",
+                    "email": "danilo@webbingbrasil.com.br",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A easy-to-use copy actions for Filament Admin.",
+            "homepage": "https://github.com/webbingbrasil/filament-copyactions",
+            "keywords": [
+                "filament",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/webbingbrasil/filament-copyactions/issues",
+                "source": "https://github.com/webbingbrasil/filament-copyactions/tree/1.0.1"
+            },
+            "time": "2022-10-07T14:38:24+00:00"
         },
         {
             "name": "webbingbrasil/filament-datefilter",

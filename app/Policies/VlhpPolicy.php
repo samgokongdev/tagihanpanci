@@ -18,7 +18,7 @@ class VlhpPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
+        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3', 'fpp', 'spv', 'user', 'pelayanan']);
     }
 
     /**
@@ -30,7 +30,7 @@ class VlhpPolicy
      */
     public function view(User $user, Vlhp $vlhp)
     {
-        // return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
+        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3', 'fpp', 'spv', 'user', 'pelayanan']);
     }
 
     /**

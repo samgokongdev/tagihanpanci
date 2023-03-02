@@ -25,10 +25,10 @@ class KomitmensRelationManager extends RelationManager
                     ->label('Target Penerbitan SP2'),
                 Forms\Components\DatePicker::make('max_permdok')
                     ->label('Target Permintaan Dokumen'),
-                Forms\Components\DatePicker::make('max_pengujian1')
-                    ->label('Target Pengujian Tahap 1'),
                 Forms\Components\DatePicker::make('max_pengujian2')
                     ->label('Target Pengujian Tahap 2 (Terbit SPHP)'),
+                Forms\Components\DatePicker::make('max_pengujian1')
+                    ->label('Rekomitmen SPHP'),
                 Forms\Components\DatePicker::make('max_lhp')
                     ->label('Target Penerbitan LHP'),
             ]);
@@ -44,11 +44,12 @@ class KomitmensRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('max_permdok')
                     ->label('Target Permintaan Dokumen')
                     ->date(),
-                Tables\Columns\TextColumn::make('max_pengujian1')
-                    ->label('Target Pengujian Tahap 1')
-                    ->date(),
+
                 Tables\Columns\TextColumn::make('max_pengujian2')
                     ->label('Target Terbit SPHP')
+                    ->date(),
+                Tables\Columns\TextColumn::make('max_pengujian1')
+                    ->label('Rekomitmen SPHP')
                     ->date(),
                 Tables\Columns\TextColumn::make('max_lhp')
                     ->label('Target Terbit LHP')
@@ -68,5 +69,5 @@ class KomitmensRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }
