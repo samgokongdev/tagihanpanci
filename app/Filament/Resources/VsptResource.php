@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\VsptResource\Pages;
 use App\Filament\Resources\VsptResource\RelationManagers;
@@ -15,6 +16,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Filters\Filter;
 
 class VsptResource extends Resource
 {
@@ -38,6 +40,9 @@ class VsptResource extends Resource
                     ->label('NAMA_WP')
                     ->disabled(),
                 Forms\Components\TextInput::make('JENIS_SPT')
+                    ->label('JENIS SPT')
+                    ->disabled(),
+                Forms\Components\TextInput::make('PEMBETULAN')
                     ->label('JENIS SPT')
                     ->disabled(),
                 Forms\Components\TextInput::make('KETERANGAN_SPT')
@@ -90,9 +95,14 @@ class VsptResource extends Resource
                     ->toggleable()
                     ->searchable()
                     ->size('sm'),
+                Tables\Columns\TextColumn::make('PEMBETULAN')
+                    ->label('PEMBETULAN')
+                    ->toggleable()
+                    ->size('sm'),
                 Tables\Columns\TextColumn::make('KETERANGAN_SPT')
                     ->label('KETERANGAN SPT')
                     ->toggleable()
+                    ->searchable()
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('MASA')
                     ->label('MASA')
@@ -149,16 +159,50 @@ class VsptResource extends Resource
                     ->trueLabel('ADA TINDAKAN PEMERIKSAAN')
                     ->falseLabel('BELUM ADA TINDAKAN PEMERIKSAAN')
                     ->label('CEK TINDAKAN PEMERIKSAAN'),
+                Filter::make('TGL_TERIMA')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')->label('Tanggal Terima SPT Awal'),
+                        Forms\Components\DatePicker::make('created_until')->label('Tanggal Terima SPT Akhir'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('TGL_TERIMA', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('TGL_TERIMA', '<=', $date),
+                            );
+                    }),
+                Filter::make('JATUH_TEMPO')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')->label('JT Pemeriksaan Awal'),
+                        Forms\Components\DatePicker::make('created_until')->label('JT Pemeriksaan Akhir'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('JATUH_TEMPO', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('JATUH_TEMPO', '<=', $date),
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->headerActions([
                 FilamentExportHeaderAction::make('export')
-                    ->timeFormat('d/m/Y')
+                    ->fileName('Data SPTLB Restitusi')
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                // Tables\Actions\DeleteBulkAction::make(),
+                FilamentExportBulkAction::make('export')
+                    ->fileName('Data SPTLB Restitusi')
             ]);
     }
 
@@ -166,6 +210,7 @@ class VsptResource extends Resource
     {
         return [
             RelationManagers\CatatansptsRelationManager::class,
+            RelationManagers\PengembalianpendahuluansRelationManager::class,
         ];
     }
 

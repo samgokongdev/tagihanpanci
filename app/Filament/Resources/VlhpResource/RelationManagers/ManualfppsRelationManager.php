@@ -81,7 +81,7 @@ class ManualfppsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->label('Tambah Data Pemeriksa dan Kontribusi'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

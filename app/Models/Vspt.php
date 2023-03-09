@@ -17,4 +17,9 @@ class Vspt extends Model
     {
         return $this->hasOne(Catatanspt::class, 'id_spt', 'ID_SPT');
     }
+
+    public function pengembalianpendahuluans()
+    {
+        return $this->hasOne(PengembalianPendahuluan::class, 'id_spt', 'ID_SPT');
+    }
 }

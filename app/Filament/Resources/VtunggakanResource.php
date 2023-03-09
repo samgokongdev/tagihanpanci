@@ -156,19 +156,19 @@ class VtunggakanResource extends Resource
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('tgl_sp2')
                     ->label('TANGGAL SP2')
-                    ->date('d-m-Y')
+                    ->date('d/m/Y')
                     ->toggleable()
                     ->sortable()
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('komitmens.max_sp2')
                     ->label('TARGET TERBIT SP2')
-                    ->date('d-m-Y')
+                    ->date('d/m/Y')
                     ->sortable()
                     ->toggleable()
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('tgl_sppl')
                     ->label('TANGGAL SPPL')
-                    ->date('d-m-Y')
+                    ->date('d/m/Y')
                     ->sortable()
                     ->toggleable()
                     ->size('sm'),
@@ -179,7 +179,7 @@ class VtunggakanResource extends Resource
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('tgl_sphp')
                     ->label('TANGGAL SPHP')
-                    ->date('d-m-Y')
+                    ->date('d/m/Y')
                     ->toggleable()
                     ->size('sm')
                     ->sortable(),
@@ -198,13 +198,13 @@ class VtunggakanResource extends Resource
                 //     ->size('sm'),
                 Tables\Columns\TextColumn::make('komitmens.max_pengujian2')
                     ->label('KOMITMEN SPHP')
-                    ->date('d-m-Y')
+                    ->date('d/m/Y')
                     ->sortable()
                     ->toggleable()
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('komitmens.max_pengujian1')
                     ->label('REKOMITMEN SPHP')
-                    ->date('d-m-Y')
+                    ->date('d/m/Y')
                     ->sortable()
                     ->toggleable()
                     ->size('sm'),
@@ -214,28 +214,29 @@ class VtunggakanResource extends Resource
                 //     ->sortable()
                 //     ->toggleable()
                 //     ->size('sm'),
-
-                // Tables\Columns\TextColumn::make('ang1_1')
-                //     ->label('ANGGOTA 1')
-                //     ->toggleable()
-                //     ->size('sm'),
-                // Tables\Columns\TextColumn::make('ang2_1')
-                //     ->label('ANGGOTA 2')
-                //     ->toggleable()
-                //     ->size('sm'),
-                // Tables\Columns\TextColumn::make('kt1')
-                //     ->label('KETUA TIM')
-                //     ->toggleable()
-                //     ->size('sm'),
                 Tables\Columns\TextColumn::make('spv1')
                     ->label('SUPERVISOR')
                     ->sortable()
+                    ->toggleable()
+                    ->size('sm'),
+                Tables\Columns\TextColumn::make('kt1')
+                    ->label('KETUA TIM')
+                    ->toggleable()
+                    ->size('sm'),
+                Tables\Columns\TextColumn::make('ang1_1')
+                    ->label('ANGGOTA 1')
+                    ->toggleable()
+                    ->size('sm'),
+                Tables\Columns\TextColumn::make('ang2_1')
+                    ->label('ANGGOTA 2')
                     ->toggleable()
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('pic1')
                     ->label('FPP PIC')
                     ->toggleable()
                     ->size('sm'),
+
+
 
             ])
             ->filters([
@@ -324,13 +325,16 @@ class VtunggakanResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->headerActions([
-                // FilamentExportHeaderAction::make('export')
-                //     ->timeFormat('d-m-Y')
+                FilamentExportHeaderAction::make('export')
+                    ->fileName('Data Tunggakan Pemeriksaan')
+                    // ->snappy()
+                    ->defaultPageOrientation('landscape')
+                // ->timeFormat('d M Y')
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),
-                // FilamentExportBulkAction::make('export')
-                //     ->timeFormat('d-m-Y')
+                FilamentExportBulkAction::make('export')
+                    ->fileName('Data Tunggakan Pemeriksaan')
             ]);
     }
 

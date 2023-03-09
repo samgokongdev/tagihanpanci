@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Vlhp;
+use App\Models\Vskp;
 use App\Models\Vtunggakan;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
@@ -20,6 +21,8 @@ class VtunggakanResource extends BaseWidget
                 Card::make('Jumlah Tunggakan Pemeriksaan Target SPHP Melebihi Komitmen', Vtunggakan::where('is_sphp_lewat', true)->count()),
                 Card::make('Jumlah Pemeriksaan Sudah Terbit SPHP', Vtunggakan::where('is_sphp', true)->count()),
                 Card::make('Konversi LHP', round(Vlhp::where('tahun_lhp', date('Y'))->sum('nilai_konversi'), 2)),
+                Card::make('SKPKB & STP Terbit (Rupiah)', number_format(Vskp::where('tahun_skp', date('Y'))->whereIn('jns_skp', ['SKPKB', 'SKPKBT', 'SKPSTP'])->sum('jumlah_ket_rupiah')), 2),
+                Card::make('SKPKB & STP Terbit Dibayar (Rupiah)', number_format(Vskp::where('tahun_skp', date('Y'))->whereIn('jns_skp', ['SKPKB', 'SKPKBT', 'SKPSTP'])->sum('jumlah_dibayar')), 2),
             ];
         } else {
             return [];

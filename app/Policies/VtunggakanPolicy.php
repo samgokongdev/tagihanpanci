@@ -53,7 +53,7 @@ class VtunggakanPolicy
      */
     public function update(User $user, Vtunggakan $vtunggakan)
     {
-        // return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
+        return $user->hasRole(['admin', 'kakap', 'kasip3', 'pelp3']);
     }
 
     /**

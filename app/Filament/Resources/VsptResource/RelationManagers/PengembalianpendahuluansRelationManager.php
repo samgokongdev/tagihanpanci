@@ -9,25 +9,35 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
-class CatatansptsRelationManager extends RelationManager
+class PengembalianpendahuluansRelationManager extends RelationManager
 {
-    protected static string $relationship = 'catatanspts';
+    protected static string $relationship = 'pengembalianpendahuluans';
 
-    protected static ?string $recordTitleAttribute = 'id_spt';
-    protected static ?string $title = 'Catatan Terkait SPT';
+    protected static ?string $recordTitleAttribute = 'Pengembalian Pendahuluan';
+    protected static ?string $title = 'Pengembalian Pendahuluan';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                // Forms\Components\TextInput::make('status_permohonan')
+                //     ->label('STATUS PERMOHONAN')
+                //     ->required()
+                //     ->maxLength(255),
+                Select::make('status_permohonan')
+                    ->options([
+                        'proses' => 'PROSES',
+                        'terima' => 'TERIMA',
+                        'tolak' => 'TOLAK',
+                    ])
+                    ->default('proses')
+                    ->disablePlaceholderSelection()
+                    ->label('STATUS PERMOHONAN'),
                 Forms\Components\TextInput::make('catatan')
                     ->label('CATATAN')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('np2')
-                    ->label('NP2')
-                    ->required()
+                    // ->required()
                     ->maxLength(255),
             ]);
     }
@@ -36,8 +46,8 @@ class CatatansptsRelationManager extends RelationManager
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('status_permohonan')->label('STATUS'),
                 Tables\Columns\TextColumn::make('catatan')->label('CATATAN'),
-                Tables\Columns\TextColumn::make('np2')->label('NP2'),
             ])
             ->filters([
                 //

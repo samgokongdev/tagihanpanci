@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\VsptResource\RelationManagers;
+namespace App\Filament\Resources\VlhpResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -10,24 +10,20 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CatatansptsRelationManager extends RelationManager
+class ArsiplhpsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'catatanspts';
+    protected static string $relationship = 'arsiplhps';
 
-    protected static ?string $recordTitleAttribute = 'id_spt';
-    protected static ?string $title = 'Catatan Terkait SPT';
+    protected static ?string $recordTitleAttribute = 'Lokasi Arsip LHP Triga Drive';
+    protected static ?string $title = 'Lokasi Arsip LHP Triga Drive';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('catatan')
-                    ->label('CATATAN')
+                Forms\Components\TextInput::make('link')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('np2')
-                    ->label('NP2')
-                    ->required()
+                    ->label('Link Arsip')
                     ->maxLength(255),
             ]);
     }
@@ -36,14 +32,14 @@ class CatatansptsRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('catatan')->label('CATATAN'),
-                Tables\Columns\TextColumn::make('np2')->label('NP2'),
+                Tables\Columns\TextColumn::make('link')
+                    ->label('LINK TRIGA DRIVE'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()->label('Tambah Link Arsip LHP'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

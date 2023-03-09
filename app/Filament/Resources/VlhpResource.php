@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\VlhpResource\Pages;
 use App\Filament\Resources\VlhpResource\RelationManagers;
 use App\Models\Vlhp;
@@ -15,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Webbingbrasil\FilamentCopyActions\Tables\Actions\CopyAction;
+use Filament\Tables\Filters\Filter;
 
 class VlhpResource extends Resource
 {
@@ -94,12 +97,24 @@ class VlhpResource extends Resource
                 Tables\Columns\TextColumn::make('periode_2')
                     ->label('PERIODE 2')
                     ->size('sm'),
+                Tables\Columns\TextColumn::make('sp2')
+                    ->label('NOMOR SP2')
+                    ->size('sm'),
+                Tables\Columns\TextColumn::make('tgl_sp2')
+                    ->label('TANGGAL SP2')
+                    ->date('d/m/Y')
+                    ->size('sm'),
+                Tables\Columns\TextColumn::make('tgl_sppl')
+                    ->label('TANGGAL SPPL')
+                    ->date('d/m/Y')
+                    ->size('sm'),
                 Tables\Columns\TextColumn::make('lhp')
                     ->label('NOMOR LHP')
                     ->size('sm'),
                 Tables\Columns\TextColumn::make('tgl_lhp')
-                    ->label('NOMOR LHP')
-                    ->date('d-M-Y')
+                    ->label('TANGGAL LHP')
+                    ->sortable()
+                    ->date('d/m/Y')
                     ->size('sm'),
                 TextColumn::make('jumlah_skplb_idr')
                     ->money('idr', true)
@@ -134,12 +149,39 @@ class VlhpResource extends Resource
                     ->options(
                         Vlhp::orderBy('kode_rik', 'asc')->pluck('kode_rik', 'kode_rik')
                     ),
+                Filter::make('created_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')->label('Tanggal LHP Awal'),
+                        Forms\Components\DatePicker::make('created_until')->label('Tanggal LHP Akhir'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('tgl_lhp', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('tgl_lhp', '<=', $date),
+                            );
+                    }),
+                SelectFilter::make('status_konversi')
+                    ->label('STATUS')
+                    ->options(
+                        Vlhp::orderBy('status_konversi', 'asc')->pluck('status_konversi', 'status_konversi')
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->hidden()
             ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('export')
+                    ->fileName('Data Laporan Hasil Pemeriksaan')
+            ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make()->hidden(),
+                // Tables\Actions\DeleteBulkAction::make()->hidden(),
+                FilamentExportBulkAction::make('export')
+                    ->fileName('Data Laporan Hasil Pemeriksaan')
             ]);
     }
 
@@ -149,6 +191,7 @@ class VlhpResource extends Resource
             RelationManagers\VskpsRelationManager::class,
             RelationManagers\KomitmensRelationManager::class,
             RelationManagers\ManualfppsRelationManager::class,
+            RelationManagers\ArsiplhpsRelationManager::class,
         ];
     }
 

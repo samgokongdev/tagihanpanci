@@ -61,11 +61,11 @@ class VskpsRelationManager extends RelationManager
                     ->label('NILAI CAIR'),
             ])
             ->filters([
-                SelectFilter::make('jns_skp')
-                    ->options(
-                        Vskp::pluck('jns_skp', 'jns_skp')
-                    )
-                    ->label('JENIS SKP'),
+                // SelectFilter::make('jns_skp')
+                //     ->options(
+                //         Vskp::pluck('jns_skp', 'jns_skp')
+                //     )
+                //     ->label('JENIS SKP'),
             ])
             ->headerActions([
                 // Tables\Actions\CreateAction::make(),

@@ -23,6 +23,11 @@ class Vlhp extends Model
         return $this->hasOne(Komitmen::class, 'np2', 'np2');
     }
 
+    public function arsiplhps()
+    {
+        return $this->hasOne(Arsiplhp::class, 'np2', 'np2');
+    }
+
     public function manualfpps()
     {
         return $this->hasOne(Manualfpp::class, 'np2', 'np2');
