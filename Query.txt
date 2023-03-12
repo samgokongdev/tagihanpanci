@@ -1,0 +1,378 @@
+--jadwalgps--
+
+select 
+a.np2,
+b.npwp,
+b.kode_rik,
+b.nama_wp,
+b.periode_1,
+b.periode_2,
+b.spv1,
+b.kt1,
+b.ang1_1,
+b.ang2_1,
+a.tgl_gp,
+UPPER(a.kasi) as kasi,
+UPPER(a.ar) as ar,
+UPPER(a.penilai) as penilai,
+UPPER(a.penyuluh) as penyuluh,
+UPPER(a.notulen) as notulen,
+UPPER(a.pic) as pic,
+a.tgl_gp_ubah,
+case
+	when a.tgl_gp_ubah is null then a.tgl_gp
+	else a.tgl_gp_ubah
+end as tgl_gp_fix,
+DATEDIFF(a.tgl_gp, CURDATE()) as selisih_hari,
+case	
+	when DATEDIFF(a.tgl_gp, CURDATE()) < 14 then true
+	else false
+end as fg_show
+
+from gelarperkaras as a
+
+left join vtunggakans as b
+	on a.np2 = b.np2 
+
+--mfwp_clean--
+
+select 
+replace(REPLACE(a.npwp,".",""),"-","") as npwp,
+a.nama,
+a.status
+from masterfile as a 
+
+--reportskp--
+SELECT
+	a.np2,
+	a.npwp,
+	a.nama_wp,
+	a.jns_skp,
+	a.pasal_skp,
+	a.nomor_ket,
+	a.tanggal_skp,
+	a.tahun_ket,
+	a.mata_uang,
+	a.jumlah_ket_rupiah,
+	a.jumlah_ket_disetujui_rupiah,
+	a.jumlah_dibayar,
+	a.sumber,
+	a.no_dok,
+	a.kode_rik,
+	b.spv,
+	b.kt,
+	b.ang1,
+	b.ang2,
+	b.pic,
+	b.k1,
+	b.k2,
+	b.k3 
+FROM
+	skp as a
+left join manualfpps as b
+	on a.np2 = b.np2
+where year(a.tanggal_skp) = 2023  and sumber = 'LPP' 
+
+--ringkasan_skp--
+
+SELECT 
+x.np2,
+x.no_dok,
+y.tgl_lhp,
+x.kode_rik,
+x.jumlah_skpkb + x.jumlah_stp as total_skp_stp,
+x.jumlah_skpkb_dibayar + x.jumlah_stp_dibayar as total_skp_stp_dibayar,
+z.spv,
+z.kt,
+z.ang1,
+z.ang2,
+z.pic,
+z.k1,
+z.k2,
+z.k3 
+FROM 
+(
+SELECT
+	a.np2,
+	a.no_dok,
+	a.kode_rik,
+	SUM(CASE WHEN a.jns_skp like '%SKPKB%' then a.jumlah_ket_rupiah else 0 END) as jumlah_skpkb,
+	SUM(CASE WHEN a.jns_skp like '%SKPSTP%' then a.jumlah_ket_rupiah else 0 END) as jumlah_stp,
+	SUM(CASE WHEN a.jns_skp like '%SKPKB%' then a.jumlah_dibayar else 0 END) as jumlah_skpkb_dibayar,
+	SUM(CASE WHEN a.jns_skp like '%SKPSTP%' then a.jumlah_dibayar else 0 END) as jumlah_stp_dibayar
+FROM
+	reportskp as a
+GROUP BY a.np2,a.no_dok, a.kode_rik
+) AS x
+left join lhp as y
+on x.np2 = y.np2
+left join manualfpps as z
+on x.np2 = z.np2 
+
+where y.up2 = "056"
+order by x.no_dok 
+
+--tagihanpancis--
+SELECT
+	a.np2,
+	a.tgl_np2,
+	a.up2,
+	a.npwp,
+	a.nama_wp,
+	a.kode_rik,
+	a.periode_1,
+	a.periode_2,
+	a.masa_pajak,
+	a.th_pajak,
+	a.sp2,
+	a.tgl_sp2,
+	a.tgl_sppl,
+	a.sphp,
+	a.tgl_sphp,
+	a.jt_daluarsa_sistem,
+	a.fg_komitmen,
+	b.max_sp2,
+	b.max_permdok,
+	b.max_pengujian1,
+	b.max_pengujian2,
+	b.max_lhp,
+	c.spv,
+	c.kt,
+	c.ang1,
+	c.ang2,
+	c.pic
+FROM
+	vtunggakans AS a
+left join 
+	komitmens as b
+	on a.np2 = b.np2
+left join manualfpps as c
+	on a.np2 = c.np2
+where a.fg_komitmen is true 
+
+--vlhps--
+
+SELECT
+	a.np2,
+	a.npwp,
+	a.nama_wp,
+	a.kode_rik,
+	a.periode_1,
+	a.periode_2,
+	a.masa_pajak,
+	a.tahun_pajak,
+	a.sp2,
+	a.tgl_sp2,
+	a.tgl_rik as tgl_sppl,
+	a.lhp,
+	a.tgl_lhp,
+	a.jumlah_skplb_idr,
+	a.jumlah_skpstp,
+	a.jumlah_skpstp_dibayar,
+	year(a.tgl_lhp) as tahun_lhp,
+	a.status_konversi,
+	a.fg_tepat_waktu as nilai_konversi,
+	b.spv,
+	b.kt,
+	b.ang1,
+	b.ang2
+FROM
+	lhp AS a 
+LEFT JOIN
+	manualfpps as b
+	on a.np2 = b.np2
+where year(a.tgl_lhp) >= 2017 
+
+--vskps--
+
+SELECT
+	a.np2,
+	a.jns_skp,
+	a.pasal_skp,
+	a.masa_1,
+	a.masa_2,
+	a.tahun_pajak,
+	a.nomor_ket,
+	a.tanggal_skp,
+	YEAR(a.tanggal_skp) as tahun_skp,
+	a.jumlah_ket_rupiah,
+	a.jumlah_ket_disetujui_rupiah,
+	a.jumlah_dibayar 
+FROM
+	skp AS a 
+
+--vspts--
+
+select 
+a.id_spt as ID_SPT,
+a.no_bps as NO_BPS,
+a.pembetulan as PEMBETULAN,
+a.npwp as NPWP,
+a.nama as NAMA_WP,
+a.kode_alias as JENIS_SPT,
+a.ket as KETERANGAN_SPT,
+a.nilai as NILAI_RES,
+a.masa as MASA,
+a.tahun as TAHUN,
+a.tgl_terima as TGL_TERIMA,
+a.tgl_jt_rik as JATUH_TEMPO,
+case
+	when a.np2 != "" then a.np2
+	when a.np2_lhp != "" then a.np2_lhp
+	when b.np2 != "" then b.np2
+	else null
+end as NP2_CLEAN,
+case
+	when a.np2 != "" then CONCAT(left(a.np2,3),".",mid(a.np2,4,3),".",mid(a.np2,7,4),".",mid(a.np2,11,4),".",right(a.np2,5))
+	when a.np2_lhp != "" then CONCAT(left(a.np2_lhp,3),".",mid(a.np2_lhp,4,3),".",mid(a.np2_lhp,7,4),".",mid(a.np2_lhp,11,4),".",right(a.np2_lhp,5))
+	when b.np2 != "" then CONCAT(left(b.np2,3),".",mid(b.np2,4,3),".",mid(b.np2,7,4),".",mid(b.np2,11,4),".",right(b.np2,5))
+	else null
+end as NP2,
+case
+	when a.lhp is not null then "LHP"
+	when a.sphp != "" then "SPHP"
+	when a.sp2 != "" then "SP2"
+	when a.np2 != "" then "NP2"
+	when b.np2 != "" then "ADA TINDAKAN PEMERIKSAAN DENGAN CATATAN"
+	else null
+end AS PROGRESS_PEMERIKSAAN,
+case
+	when a.lhp is not null then a.lhp
+	when a.sphp != "" then a.sphp
+	when a.sp2 !="" then a.sp2
+	when a.np2 is not null then null
+	when b.np2 != "" then b.catatan
+	else null
+end AS KETERANGAN,
+case
+	when a.lhp is not null or a.sphp != "" or a.sp2 !="" or a.np2 is not null or b.np2 != "" then true
+	else false
+end AS fg_progress,
+case
+	when a.ket like '%Pengembalian%' then true
+	else false
+end as fg_res
+from
+(select 
+a.*,
+d.nama,
+c.np2,
+c.tgl_np2,
+c.sp2,
+c.tgl_sp2,
+c.sphp,
+c.tgl_sphp,
+b.np2 as np2_lhp,
+b.lhp,
+b.tgl_lhp,
+case
+	when b.lhp != "" or c.sp2 != "" or c.np2 != "" then TRUE
+	else FALSE
+end as status_pemeriksaan
+
+from
+(SELECT
+	* 
+FROM
+	`spt_clean` 
+WHERE
+	tgl_terima BETWEEN CURDATE() - INTERVAL 1 YEAR AND CURDATE()
+	AND ket like '%Restitusi%' 
+	
+union all
+
+SELECT
+	* 
+FROM
+	`spt_clean` 
+WHERE
+	tgl_terima BETWEEN CURDATE() - INTERVAL 1 YEAR AND CURDATE()
+	AND ket like '%Kompensasi%' and kode_alias = 'TAHUNAN' 
+	
+union all
+
+SELECT
+	* 
+FROM
+	`spt_clean` 
+WHERE
+	tgl_terima BETWEEN CURDATE() - INTERVAL 1 YEAR AND CURDATE()
+	AND ket like '%Pengembalian%'
+) AS a
+left join lhp as b
+on a.id_spt = b.id_spt
+left join vtunggakans as c
+on a.id_spt = c.id_spt 
+left join mfwp_clean as d
+on a.npwp = d.npwp 
+)as a
+left join catatanspts as b
+on a.id_spt = b.id_spt
+order by a.tgl_jt_rik asc 
+
+--vtunggakans--
+
+SELECT
+	a.*,
+	b.max_pengujian2 as target_sphp_idtp,
+	b.max_pengujian1 as rekomitmen,
+	LOWER(d.nama) as nama_wp2,
+	c.spv as spv1,
+	c.kt as kt1,
+	c.ang1 as ang1_1,
+	c.ang2 as ang2_1,
+	c.pic as pic1,
+	case
+		when b.max_sp2 is null and b.max_permdok is null and b.max_pengujian1 is null and b.max_pengujian2 is null and b.max_lhp is null then false
+		else true
+	end as fg_komitmen, 
+	case
+		when a.sp2 = "" then false
+		else true
+	end as is_sp2, 
+	case
+		when a.sphp = "" then false
+		else true
+	end as is_sphp,
+	case
+		when DATEDIFF(b.max_sp2,CURDATE()) <= 7 and sp2 = "" then true
+		else false
+	end fg_sp2,
+	case
+		when DATEDIFF(b.max_pengujian2,CURDATE()) <= 14 and sphp = "" then true
+		else false
+	end fg_sphp,
+	case
+		when DATEDIFF(b.max_lhp,CURDATE()) <= 14 then true
+		else false
+	end fg_lhp,
+	case
+		when DATEDIFF(b.max_pengujian2,CURDATE()) < 0 and sphp = "" then true
+		else false
+	end is_sphp_lewat,
+	case
+		when a.sp2 = "" and c.spv != "" then true
+		else false
+	end as is_alokasi_nosp2,
+	case
+		when a.sp2 = "" and c.spv is null then true
+		else false
+	end as belum_alokasi,
+	case
+		when c.pic is null then true
+		else false
+	end as pic_not_set,
+	case
+		when a.sp2 != "" and a.tgl_sppl is null then true
+		else false
+	end as belum_sppl
+FROM
+	tunggakan2 AS a
+LEFT JOIN
+	komitmens as b
+	on a.np2 = b.np2 
+left join manualfpps as c
+	on a.np2 = c.np2 
+left join mfwp_clean as d
+	on a.npwp = d.npwp 
+where d.npwp is not null 

@@ -159,6 +159,11 @@ class VsptResource extends Resource
                     ->trueLabel('ADA TINDAKAN PEMERIKSAAN')
                     ->falseLabel('BELUM ADA TINDAKAN PEMERIKSAAN')
                     ->label('CEK TINDAKAN PEMERIKSAAN'),
+                TernaryFilter::make('fg_res')
+                    ->placeholder('SEMUA')
+                    ->trueLabel('Pengembalian Pendahuluan')
+                    ->falseLabel('Restitusi')
+                    ->label('JENIS SPTLB'),
                 Filter::make('TGL_TERIMA')
                     ->form([
                         Forms\Components\DatePicker::make('created_from')->label('Tanggal Terima SPT Awal'),
@@ -191,6 +196,11 @@ class VsptResource extends Resource
                                 fn (Builder $query, $date): Builder => $query->whereDate('JATUH_TEMPO', '<=', $date),
                             );
                     }),
+                // SelectFilter::make('KETERANGAN_SPT')
+                //     ->options(
+                //         Vspt::whereNotNull('KETERANGAN_SPT')->orderBy('KETERANGAN_SPT', 'asc')->pluck('KETERANGAN_SPT', 'KETERANGAN_SPT')
+                //     )
+                //     ->label('JENIS SPT'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

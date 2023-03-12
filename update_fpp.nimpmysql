@@ -1,0 +1,144 @@
+{
+  "Version": 1.0,
+  "General": {
+    "AccessDBPassword": "",
+    "AccessLogonName": "",
+    "AccessLogonPassword": "",
+    "AccessSystemDBFile": "",
+    "BinaryDataEncoding": "Base64",
+    "BreakLines": "",
+    "Catalog": "",
+    "ContinueOnError": true,
+    "CreateAutoInc": false,
+    "DateDelimiter": "/",
+    "DateOrder": "DMY",
+    "DateTimeOrder": "DateTime",
+    "DecimalSymbol": ".",
+    "Encoding": 65001,
+    "FieldDelimiter": "Tab",
+    "FieldNameRow": 1,
+    "FieldSeparationType": "Delimited",
+    "FirstDataRow": 2,
+    "FourDigitYears": true,
+    "IgnoreForeignKeyConstraint": false,
+    "ImportDeletedRecords": false,
+    "ImportMode": "AppendUpdate",
+    "ImportType": "Excel",
+    "IncludeTagAttributesAsTableField": false,
+    "IncludeUniqueIndexFKey": false,
+    "JsonTagIdentifierObj": {
+      "JsonTagName": "",
+      "JsonParentTagName": "",
+      "JsonTagLevel": 0,
+      "JsonTagType": "Object"
+    },
+    "LastDataRow": 0,
+    "Project": "",
+    "ProjectOwnerNavicatID": "",
+    "RecordDelimiter": "CRLF",
+    "RunMultipleQueriesInEachExecution": true,
+    "Schema": "tagihanpanci",
+    "Server": "dashboard",
+    "TextQualifier": "\"",
+    "ThousandSeparator": ",",
+    "TimeDelimiter": ":",
+    "UseEmptyStringAsNull": false,
+    "XMLTagIdentifier": ""
+  },
+  "ImportSources": [
+    {
+      "SourceFile": "E:\\web-programing\\dashboard_rik\\xlsx\\updater\\manualfpps.xlsx",
+      "SourceQueries": []
+    }
+  ],
+  "TableMappings": [
+    {
+      "ConditionalQuery": "",
+      "IsNewTable": false,
+      "IsUserDefinedQuery": false,
+      "SourceFile": "E:\\web-programing\\dashboard_rik\\xlsx\\updater\\manualfpps.xlsx",
+      "SourceSchema": "",
+      "SourceTableName": "Sheet1",
+      "TargetTableName": "manualfpps",
+      "FieldMappings": [
+        {
+          "FieldAutoIncrement": false,
+          "FieldIsNullable": true,
+          "FieldLength": 255,
+          "FieldScale": 0,
+          "FieldType": "varchar",
+          "IsKey": true,
+          "IsSelected": true,
+          "SourceFieldName": "np2",
+          "TargetFieldName": "np2"
+        },
+        {
+          "FieldAutoIncrement": false,
+          "FieldIsNullable": true,
+          "FieldLength": 255,
+          "FieldScale": 0,
+          "FieldType": "varchar",
+          "IsKey": false,
+          "IsSelected": true,
+          "SourceFieldName": "jt_manual",
+          "TargetFieldName": "jt_manual"
+        },
+        {
+          "FieldAutoIncrement": false,
+          "FieldIsNullable": true,
+          "FieldLength": 255,
+          "FieldScale": 0,
+          "FieldType": "varchar",
+          "IsKey": false,
+          "IsSelected": true,
+          "SourceFieldName": "spv",
+          "TargetFieldName": "spv"
+        },
+        {
+          "FieldAutoIncrement": false,
+          "FieldIsNullable": true,
+          "FieldLength": 255,
+          "FieldScale": 0,
+          "FieldType": "varchar",
+          "IsKey": false,
+          "IsSelected": true,
+          "SourceFieldName": "kt",
+          "TargetFieldName": "kt"
+        },
+        {
+          "FieldAutoIncrement": false,
+          "FieldIsNullable": true,
+          "FieldLength": 255,
+          "FieldScale": 0,
+          "FieldType": "varchar",
+          "IsKey": false,
+          "IsSelected": true,
+          "SourceFieldName": "ang1",
+          "TargetFieldName": "ang1"
+        },
+        {
+          "FieldAutoIncrement": false,
+          "FieldIsNullable": true,
+          "FieldLength": 255,
+          "FieldScale": 0,
+          "FieldType": "varchar",
+          "IsKey": false,
+          "IsSelected": true,
+          "SourceFieldName": "ang2",
+          "TargetFieldName": "ang2"
+        },
+        {
+          "FieldAutoIncrement": false,
+          "FieldIsNullable": true,
+          "FieldLength": 255,
+          "FieldScale": 0,
+          "FieldType": "varchar",
+          "IsKey": false,
+          "IsSelected": true,
+          "SourceFieldName": "pic",
+          "TargetFieldName": "pic"
+        }
+      ]
+    }
+  ]
+}

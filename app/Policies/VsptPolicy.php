@@ -53,7 +53,7 @@ class VsptPolicy
      */
     public function update(User $user, Vspt $vspt)
     {
-        return $user->hasRole(['admin', 'pelp3']);
+        return $user->hasRole(['admin', 'pelp3', 'pelayanan']);
     }
 
     /**
